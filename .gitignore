@@ -1,1 +1,30 @@
 datasets_xml/
+.env
+*.pyc
+__pycache__
+.pytest_cache/
+
+# Anserini index
+lucene-index*
+cord19-hnsw-index*
+# api/index/iso19115/
+api/.DS_Store
+
+# TensorFlow SavedModel
+*.pb
+variables/
+
+# Logs
+*.log*
+*.log.*
+*.out
+
+.vscode
+
+# client builds
+client/build/
+client/static/
+client/node_modules/
+
+# virtualenv
+envirini/
