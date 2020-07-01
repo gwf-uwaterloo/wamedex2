@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useLocation } from 'react-router';
 import ErrorBoundary from 'react-error-boundary';
+import ResizePanel from "react-resize-panel";
 
 import { PageWrapper, PageContent, Heading2 } from '../../../shared/Styles';
 import Loading from '../../common/Loading';
@@ -73,9 +74,6 @@ const HomePage = () => {
 
   const [loading, setLoading] = useState<Boolean>(false);
   const [queryInputText, setQueryInputText] = useState<string>(query || '');
-  const [selectedVertical, setSelectedVertical] = useState<SearchVerticalOption>(
-    SEARCH_VERTICAL_OPTIONS[0],
-  );
 
   const [filters, setFilters] = useState<SearchFilters>(defaultFilter);
   const [selectedFilters, setSelectedFilters] = useState<SelectedSearchFilters>({
@@ -92,19 +90,7 @@ const HomePage = () => {
     setQueryInputText(query);
   }, [query]);
 
-  useEffect(() => {
-    switch (vertical) {
-      case 'cord19':
-        setSelectedVertical(SEARCH_VERTICAL_OPTIONS[0]);
-        break;
-      case 'trialstreamer':
-        setSelectedVertical(SEARCH_VERTICAL_OPTIONS[1]);
-        break;
-      default:
-        setSelectedVertical(SEARCH_VERTICAL_OPTIONS[0]);
-    }
-  }, [vertical]);
-
+  const selectedVertical = SEARCH_VERTICAL_OPTIONS[0];
   useEffect(() => {
     const fetchData = async () => {
       if (query === null || query === '') {
@@ -174,46 +160,45 @@ const HomePage = () => {
   return (
     <PageWrapper>
       <PageContent>
-        <SearchBar
-          query={queryInputText}
-          vertical={selectedVertical}
-          setQuery={setQueryInputText}
-          setVertical={setSelectedVertical}
-        />
         <ErrorBoundary FallbackComponent={() => <NoResults>No results found</NoResults>}>
           {loading && <Loading />}
           <HomeContent>
+            <MapWrapper><IsoMap polygon={coordinates}></IsoMap></MapWrapper>
             <SideBar>
-            {!query && <HomeText />}
-            {query && searchResults !== null && searchResults.length > 0 && (
-              <Filters
-                filters={filters}
-                selectedFilters={selectedFilters}
-                setSelectedFilters={setSelectedFilters}
+              <SearchBar
+                query={queryInputText}
+                vertical={selectedVertical}
+                setQuery={setQueryInputText}
               />
-            )}
-            {query &&
-              filteredResults !== null &&
-              (searchResults === null || filteredResults.length === 0 ? (
-                <NoResults>No results found</NoResults>
-              ) : (
-                <>
-                  {/*<SearchResults>*/}
-                    {filteredResults.map((article, i) => (
-                      <SearchResult
-                        key={i}
-                        article={article}
-                        position={i}
-                        queryTokens={queryTokens}
-                        queryId={queryId}
-                        updateCoord={updateCoordinates}
-                      />
-                    ))}
-                  {/*</SearchResults>*/}
-                </>
-              ))}
-              </SideBar>
-              <MapWrapper><IsoMap polygon={coordinates}></IsoMap></MapWrapper>
+              {!query && <HomeText />}
+              {query && searchResults !== null && searchResults.length > 0 && (
+                <Filters
+                  filters={filters}
+                  selectedFilters={selectedFilters}
+                  setSelectedFilters={setSelectedFilters}
+                />
+              )}
+              {query &&
+                filteredResults !== null &&
+                (searchResults === null || filteredResults.length === 0 ? (
+                  <NoResults>No results found</NoResults>
+                ) : (
+                  <>
+                    {/*<SearchResults>*/}
+                      {filteredResults.map((article, i) => (
+                        <SearchResult
+                          key={i}
+                          article={article}
+                          position={i}
+                          queryTokens={queryTokens}
+                          queryId={queryId}
+                          updateCoord={updateCoordinates}
+                        />
+                      ))}
+                    {/*</SearchResults>*/}
+                  </>
+                ))}
+            </SideBar>
           </HomeContent>
         </ErrorBoundary>
       </PageContent>
@@ -225,16 +210,20 @@ export default HomePage;
 
 const SideBar = styled.div`
   width: 30%;
-  height: 100%;
+  height: 100vh;
   overflow: scroll;
   display: inline-block;
+  position: absolute;
   flex-direction: column;
-  margin-left: 2%;
+  padding-left: 2%;
+  resize: horizontal;
+  background-color: white;
+  z-index: 10;
 `;
 
 const HomeContent = styled.div`
   width: 100%;
-  height: 90vh;
+  height: 100vh;
   margin-right: 0px;
   display: block;
   @media only screen and (max-width: ${({ theme }) => theme.breakpoints.singleColumn}px) {
@@ -253,5 +242,5 @@ const MapWrapper = styled.div`
   float: right;
   display: flex;
   flex-direction: column;
-  width: 68%;
+  width: 100%;
 `;

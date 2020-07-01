@@ -152,21 +152,6 @@ const SearchResult = ({ article, position, queryId, queryTokens, updateCoord}: S
             </Paragraph>
           </>
         )}
-        {/* Uncomment below when doing work on paragraphs */}
-        {/* 
-        {paragraphs && paragraphs.length > 0 && (
-          <ResultText collapsed={collapsed} marginTop={20} marginBottom={4}>
-            <SectionTitle className="hideCollapsed">Full-Text Excerpt</SectionTitle>
-          </ResultText>
-        )}
-        {paragraphs.map((paragraph, i) => (
-          <Paragraph marginTop={i === 0 ? 0 : 16} key={i} collapsed={collapsed}>
-            {highlightText(paragraph, highlights[i], queryTokens)}
-            {i === paragraphs.length - 1 && highlights[i] && highlights[i].length > 0 && (
-              <Ellipsis className="showCollapsed">...</Ellipsis>
-            )}
-          </Paragraph>
-        ))} */}
       </div>
       <LinkContainer>
         {(abstract || paragraphs.length > 0) && (
