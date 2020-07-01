@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useLocation } from 'react-router';
 import ErrorBoundary from 'react-error-boundary';
-import ResizePanel from "react-resize-panel";
 
 import { PageWrapper, PageContent, Heading2 } from '../../../shared/Styles';
 import Loading from '../../common/Loading';
@@ -20,6 +19,9 @@ import {
 import Filters from './Filters';
 import { SearchArticle, SearchFilters, SelectedSearchFilters } from '../../../shared/Models';
 import IsoMap from './Map'
+import Article from './Article'
+import Collapsible from 'react-collapsible';
+import { colors } from 'react-select/src/theme';
 
 const defaultFilter = {
   yearMinMax: [0, 0],
@@ -27,6 +29,9 @@ const defaultFilter = {
   journals: [],
   sources: [],
 };
+
+
+const defaultArticle = {} as SearchArticle;
 
 const getSearchFilters = (searchResults: SearchArticle[] | null): SearchFilters => {
   if (searchResults === null || searchResults.length === 0) {
@@ -153,10 +158,20 @@ const HomePage = () => {
         );
 
   const [coordinates, setCoordinates] = useState("");
-
   function updateCoordinates(coordinate: string){
-    setCoordinates(coordinate)
+    setCoordinates(coordinate);
   }
+
+  const [searchStatus, setSearchStatus] = useState(true);
+  function updateSearchStatus(searchStatus: boolean) {
+    setSearchStatus(searchStatus);
+  }
+
+  const [currentArticle, setCurrentArticle] = useState(defaultArticle);
+  function updateCurrentArticle(article: SearchArticle) {
+    setCurrentArticle(article);
+  }
+
   return (
     <PageWrapper>
       <PageContent>
@@ -165,26 +180,28 @@ const HomePage = () => {
           <HomeContent>
             <MapWrapper><IsoMap polygon={coordinates}></IsoMap></MapWrapper>
             <SideBar>
-              <SearchBar
-                query={queryInputText}
-                vertical={selectedVertical}
-                setQuery={setQueryInputText}
-              />
-              {!query && <HomeText />}
-              {query && searchResults !== null && searchResults.length > 0 && (
-                <Filters
-                  filters={filters}
-                  selectedFilters={selectedFilters}
-                  setSelectedFilters={setSelectedFilters}
+              {searchStatus ?
+                (<>  <SearchBar
+                  query={queryInputText}
+                  vertical={selectedVertical}
+                  setQuery={setQueryInputText}
                 />
-              )}
-              {query &&
-                filteredResults !== null &&
-                (searchResults === null || filteredResults.length === 0 ? (
-                  <NoResults>No results found</NoResults>
-                ) : (
-                  <>
-                    {/*<SearchResults>*/}
+                {!query && <HomeText />}
+                {query && searchResults !== null && searchResults.length > 0 && (
+                  <Collapsible trigger="Filters" style={{backgroundColor:"blue"}} triggerClassName="FilterClass" triggerOpenedClassName="FilterClass">        
+                    <Filters
+                      filters={filters}
+                      selectedFilters={selectedFilters}
+                      setSelectedFilters={setSelectedFilters}
+                    />
+                  </Collapsible>
+                )}
+                {query &&
+                  filteredResults !== null &&
+                  (searchResults === null || filteredResults.length === 0 ? (
+                    <NoResults>No results found</NoResults>
+                  ) : (
+                    <>
                       {filteredResults.map((article, i) => (
                         <SearchResult
                           key={i}
@@ -193,11 +210,15 @@ const HomePage = () => {
                           queryTokens={queryTokens}
                           queryId={queryId}
                           updateCoord={updateCoordinates}
+                          updateStatus={updateSearchStatus}
+                          updateCurrentArticle={updateCurrentArticle}
                         />
                       ))}
-                    {/*</SearchResults>*/}
-                  </>
-                ))}
+                    </>
+                  ))} </>) : 
+                    (
+                      <Article updateStatus={updateSearchStatus} article={currentArticle}/>
+                  )}
             </SideBar>
           </HomeContent>
         </ErrorBoundary>

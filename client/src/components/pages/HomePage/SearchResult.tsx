@@ -22,6 +22,8 @@ interface SearchResultProps {
   queryId: string;
   queryTokens: Array<string>;
   updateCoord: Function;
+  updateStatus: Function;
+  updateCurrentArticle: Function;
 }
 
 const highlightText = (
@@ -96,7 +98,7 @@ const adjustHighlights = (
   return highlights.map((highlight) => [highlight[0] + adjustment, highlight[1] + adjustment]);
 };
 
-const SearchResult = ({ article, position, queryId, queryTokens, updateCoord}: SearchResultProps) => {
+const SearchResult = ({ article, position, queryId, queryTokens, updateCoord, updateStatus, updateCurrentArticle}: SearchResultProps) => {
   const fullTextRef = useRef(null);
   const [collapsed, setCollapsed] = useState<boolean>(true);
 
@@ -128,6 +130,8 @@ const SearchResult = ({ article, position, queryId, queryTokens, updateCoord}: S
                     body: JSON.stringify(data),
                   });
     updateCoord(article.coordinates);
+    updateStatus(false);
+    updateCurrentArticle(article);
     return 
   };
 
