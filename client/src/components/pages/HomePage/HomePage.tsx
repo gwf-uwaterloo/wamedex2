@@ -19,6 +19,9 @@ import {
 import Filters from './Filters';
 import { SearchArticle, SearchFilters, SelectedSearchFilters } from '../../../shared/Models';
 import IsoMap from './Map'
+import Article from './Article'
+import Collapsible from 'react-collapsible';
+import { colors } from 'react-select/src/theme';
 
 const defaultFilter = {
   yearMinMax: [0, 0],
@@ -26,6 +29,9 @@ const defaultFilter = {
   journals: [],
   sources: [],
 };
+
+
+const defaultArticle = {} as SearchArticle;
 
 const getSearchFilters = (searchResults: SearchArticle[] | null): SearchFilters => {
   if (searchResults === null || searchResults.length === 0) {
@@ -73,9 +79,6 @@ const HomePage = () => {
 
   const [loading, setLoading] = useState<Boolean>(false);
   const [queryInputText, setQueryInputText] = useState<string>(query || '');
-  const [selectedVertical, setSelectedVertical] = useState<SearchVerticalOption>(
-    SEARCH_VERTICAL_OPTIONS[0],
-  );
 
   const [filters, setFilters] = useState<SearchFilters>(defaultFilter);
   const [selectedFilters, setSelectedFilters] = useState<SelectedSearchFilters>({
@@ -92,19 +95,7 @@ const HomePage = () => {
     setQueryInputText(query);
   }, [query]);
 
-  useEffect(() => {
-    switch (vertical) {
-      case 'cord19':
-        setSelectedVertical(SEARCH_VERTICAL_OPTIONS[0]);
-        break;
-      case 'trialstreamer':
-        setSelectedVertical(SEARCH_VERTICAL_OPTIONS[1]);
-        break;
-      default:
-        setSelectedVertical(SEARCH_VERTICAL_OPTIONS[0]);
-    }
-  }, [vertical]);
-
+  const selectedVertical = SEARCH_VERTICAL_OPTIONS[0];
   useEffect(() => {
     const fetchData = async () => {
       if (query === null || query === '') {
@@ -167,53 +158,68 @@ const HomePage = () => {
         );
 
   const [coordinates, setCoordinates] = useState("");
-
   function updateCoordinates(coordinate: string){
-    setCoordinates(coordinate)
+    setCoordinates(coordinate);
   }
+
+  const [searchStatus, setSearchStatus] = useState(true);
+  function updateSearchStatus(searchStatus: boolean) {
+    setSearchStatus(searchStatus);
+  }
+
+  const [currentArticle, setCurrentArticle] = useState(defaultArticle);
+  function updateCurrentArticle(article: SearchArticle) {
+    setCurrentArticle(article);
+  }
+
   return (
     <PageWrapper>
       <PageContent>
-        <SearchBar
-          query={queryInputText}
-          vertical={selectedVertical}
-          setQuery={setQueryInputText}
-          setVertical={setSelectedVertical}
-        />
         <ErrorBoundary FallbackComponent={() => <NoResults>No results found</NoResults>}>
           {loading && <Loading />}
           <HomeContent>
+            <MapWrapper><IsoMap polygon={coordinates}></IsoMap></MapWrapper>
             <SideBar>
-            {!query && <HomeText />}
-            {query && searchResults !== null && searchResults.length > 0 && (
-              <Filters
-                filters={filters}
-                selectedFilters={selectedFilters}
-                setSelectedFilters={setSelectedFilters}
-              />
-            )}
-            {query &&
-              filteredResults !== null &&
-              (searchResults === null || filteredResults.length === 0 ? (
-                <NoResults>No results found</NoResults>
-              ) : (
-                <>
-                  {/*<SearchResults>*/}
-                    {filteredResults.map((article, i) => (
-                      <SearchResult
-                        key={i}
-                        article={article}
-                        position={i}
-                        queryTokens={queryTokens}
-                        queryId={queryId}
-                        updateCoord={updateCoordinates}
-                      />
-                    ))}
-                  {/*</SearchResults>*/}
-                </>
-              ))}
-              </SideBar>
-              <MapWrapper><IsoMap polygon={coordinates}></IsoMap></MapWrapper>
+              {searchStatus ?
+                (<>  <SearchBar
+                  query={queryInputText}
+                  vertical={selectedVertical}
+                  setQuery={setQueryInputText}
+                />
+                {!query && <HomeText />}
+                {query && searchResults !== null && searchResults.length > 0 && (
+                  <Collapsible trigger="Filters" style={{backgroundColor:"blue"}} triggerClassName="FilterClass" triggerOpenedClassName="FilterClass">        
+                    <Filters
+                      filters={filters}
+                      selectedFilters={selectedFilters}
+                      setSelectedFilters={setSelectedFilters}
+                    />
+                  </Collapsible>
+                )}
+                {query &&
+                  filteredResults !== null &&
+                  (searchResults === null || filteredResults.length === 0 ? (
+                    <NoResults>No results found</NoResults>
+                  ) : (
+                    <>
+                      {filteredResults.map((article, i) => (
+                        <SearchResult
+                          key={i}
+                          article={article}
+                          position={i}
+                          queryTokens={queryTokens}
+                          queryId={queryId}
+                          updateCoord={updateCoordinates}
+                          updateStatus={updateSearchStatus}
+                          updateCurrentArticle={updateCurrentArticle}
+                        />
+                      ))}
+                    </>
+                  ))} </>) : 
+                    (
+                      <Article updateStatus={updateSearchStatus} article={currentArticle}/>
+                  )}
+            </SideBar>
           </HomeContent>
         </ErrorBoundary>
       </PageContent>
@@ -225,16 +231,20 @@ export default HomePage;
 
 const SideBar = styled.div`
   width: 30%;
-  height: 100%;
+  height: 100vh;
   overflow: scroll;
   display: inline-block;
+  position: absolute;
   flex-direction: column;
-  margin-left: 2%;
+  padding-left: 2%;
+  resize: horizontal;
+  background-color: white;
+  z-index: 10;
 `;
 
 const HomeContent = styled.div`
   width: 100%;
-  height: 90vh;
+  height: 100vh;
   margin-right: 0px;
   display: block;
   @media only screen and (max-width: ${({ theme }) => theme.breakpoints.singleColumn}px) {
@@ -253,5 +263,5 @@ const MapWrapper = styled.div`
   float: right;
   display: flex;
   flex-direction: column;
-  width: 68%;
+  width: 100%;
 `;

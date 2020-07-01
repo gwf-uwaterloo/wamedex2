@@ -34,10 +34,9 @@ interface SearchBarProps extends RouteComponentProps {
   query: string;
   vertical: SearchVerticalOption;
   setQuery: (query: string) => any;
-  setVertical: (vertical: SearchVerticalOption) => any;
 }
 
-const SearchBar = ({ query, vertical, setQuery, setVertical, history }: SearchBarProps) => {
+const SearchBar = ({ query, vertical, setQuery, history }: SearchBarProps) => {
   const [typeaheadIndex, setTypeaheadIndex] = useState<number>(-1);
   const [inputFocused, setInputFocused] = useState<boolean>(false);
 
@@ -88,19 +87,6 @@ const SearchBar = ({ query, vertical, setQuery, setVertical, history }: SearchBa
         <GwfLogo src={gwf} alt="Github logo" />
       </SearchbarLogo>
       <Section>
-        <SearchBarText>Search</SearchBarText>
-        <Dropdown
-          styles={dropdownStyles}
-          className="dropdown"
-          width="200px"
-          options={SEARCH_VERTICAL_OPTIONS}
-          isSearchable={false}
-          value={vertical}
-          onChange={(value: SearchVerticalOption) => setVertical(value)}
-        />
-        <SearchBarText>for</SearchBarText>
-      </Section>
-      <Section>
         <SearchInputWrapper>
           <SearchBarInput
             placeholder="something about the polar data catalogue"
@@ -125,15 +111,14 @@ const SearchBar = ({ query, vertical, setQuery, setVertical, history }: SearchBa
             </TypeaheadWrapper>
           )}
         </SearchInputWrapper>
-        <SearchButton
-          type="submit"
-          onSubmit={() => submitQuery()}
-          onClick={() => submitQuery()}
-          onMouseDown={(e: any) => e.preventDefault()}
-        >
-          <SearchIcon />
-          Search
-        </SearchButton>
+          <SearchButton
+            type="submit"
+            onSubmit={() => submitQuery()}
+            onClick={() => submitQuery()}
+            onMouseDown={(e: any) => e.preventDefault()}
+          >
+          <SearchIcon />       
+          </SearchButton>
       </Section>
     </SearchBarWrapper>
   );
@@ -149,7 +134,6 @@ const SearchBarWrapper = styled.div`
   max-width: 100%;
   padding-top: 15px;
   padding-bottom: 15px;
-  background-color: #00b3b3;
 
 `;
 
@@ -186,7 +170,7 @@ const SearchButton = styled(Button)`
   display: flex;
   background: ${({ theme }) => theme.primary};
   border: none;
-  padding: 12px 16px;
+  padding: 15px;
   cursor: pointer;
   color: ${({ theme }) => theme.white};
   border-radius: 0 4px 4px 0;

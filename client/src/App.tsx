@@ -28,7 +28,7 @@ const App = () => {
               <NotFoundPage />
             </Route>
           </Switch>
-          <Footer />
+          {/*<Footer />*/}
         </AppContainer>
       </Router>
     </ThemeProvider>

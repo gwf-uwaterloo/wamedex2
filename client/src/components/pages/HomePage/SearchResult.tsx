@@ -22,6 +22,8 @@ interface SearchResultProps {
   queryId: string;
   queryTokens: Array<string>;
   updateCoord: Function;
+  updateStatus: Function;
+  updateCurrentArticle: Function;
 }
 
 const highlightText = (
@@ -96,7 +98,7 @@ const adjustHighlights = (
   return highlights.map((highlight) => [highlight[0] + adjustment, highlight[1] + adjustment]);
 };
 
-const SearchResult = ({ article, position, queryId, queryTokens, updateCoord}: SearchResultProps) => {
+const SearchResult = ({ article, position, queryId, queryTokens, updateCoord, updateStatus, updateCurrentArticle}: SearchResultProps) => {
   const fullTextRef = useRef(null);
   const [collapsed, setCollapsed] = useState<boolean>(true);
 
@@ -128,6 +130,8 @@ const SearchResult = ({ article, position, queryId, queryTokens, updateCoord}: S
                     body: JSON.stringify(data),
                   });
     updateCoord(article.coordinates);
+    updateStatus(false);
+    updateCurrentArticle(article);
     return 
   };
 
@@ -152,21 +156,6 @@ const SearchResult = ({ article, position, queryId, queryTokens, updateCoord}: S
             </Paragraph>
           </>
         )}
-        {/* Uncomment below when doing work on paragraphs */}
-        {/* 
-        {paragraphs && paragraphs.length > 0 && (
-          <ResultText collapsed={collapsed} marginTop={20} marginBottom={4}>
-            <SectionTitle className="hideCollapsed">Full-Text Excerpt</SectionTitle>
-          </ResultText>
-        )}
-        {paragraphs.map((paragraph, i) => (
-          <Paragraph marginTop={i === 0 ? 0 : 16} key={i} collapsed={collapsed}>
-            {highlightText(paragraph, highlights[i], queryTokens)}
-            {i === paragraphs.length - 1 && highlights[i] && highlights[i].length > 0 && (
-              <Ellipsis className="showCollapsed">...</Ellipsis>
-            )}
-          </Paragraph>
-        ))} */}
       </div>
       <LinkContainer>
         {(abstract || paragraphs.length > 0) && (
