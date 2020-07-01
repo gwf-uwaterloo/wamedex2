@@ -227,10 +227,9 @@ const SideBar = styled.div`
   width: 30%;
   height: 100%;
   overflow: scroll;
-  margin-right: 0px;
   display: inline-block;
   flex-direction: column;
-
+  margin-left: 2%;
 `;
 
 const HomeContent = styled.div`
@@ -254,7 +253,5 @@ const MapWrapper = styled.div`
   float: right;
   display: flex;
   flex-direction: column;
-  margin-left: 0px;
-  margin-top: 0px;
-  width: 70%;
+  width: 68%;
 `;

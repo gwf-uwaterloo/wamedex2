@@ -5,6 +5,7 @@ import { withRouter, RouteComponentProps } from 'react-router';
 import { Button } from 'reakit';
 import Select from 'react-select';
 
+import gwf from '../../../img/gwf.png';
 import Theme from '../../../shared/Theme';
 import {
   HOME_ROUTE,
@@ -12,8 +13,9 @@ import {
   SearchVerticalOption,
   LARGE_MOBILE_BREAKPOINT,
 } from '../../../shared/Constants';
-import { BoxShadow } from '../../../shared/Styles';
+import { BoxShadow, Heading1 } from '../../../shared/Styles';
 import Keycodes from '../../../shared/Keycodes';
+
 
 const CORD_EXAMPLES = [
   'Fresh water',
@@ -82,6 +84,9 @@ const SearchBar = ({ query, vertical, setQuery, setVertical, history }: SearchBa
 
   return (
     <SearchBarWrapper>
+      <SearchbarLogo tabIndex={0}>
+        <GwfLogo src={gwf} alt="Github logo" />
+      </SearchbarLogo>
       <Section>
         <SearchBarText>Search</SearchBarText>
         <Dropdown
@@ -140,13 +145,12 @@ const SearchBarWrapper = styled.div`
   position: relative;
   margin-right: auto;
   display: flex;
-  margin-bottom: 24px;
-  width: 860px;
+  width: 100%;
   max-width: 100%;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  background-color: #00b3b3;
 
-  @media only screen and (max-width: ${LARGE_MOBILE_BREAKPOINT}px) {
-    flex-direction: column;
-  }
 `;
 
 const SearchBarText = styled.div`
@@ -188,6 +192,7 @@ const SearchButton = styled(Button)`
   border-radius: 0 4px 4px 0;
   outline: none;
   transition: background 0.1s;
+  margin-right: 20px;
 
   &:hover,
   &:focus {
@@ -212,7 +217,7 @@ const TypeaheadResult = styled.div<{ selected: boolean }>`
   cursor: pointer;
   text-align: left;
   border-radius: 0;
-
+  
   &:hover,
   &:focus {
     background: ${({ theme }) => theme.primary};
@@ -237,7 +242,7 @@ const TypeaheadWrapper = styled.div`
   background: ${({ theme }) => theme.white};
   border-radius: 4px;
   border: 1px solid ${({ theme }) => theme.lightGrey};
-  z-index: 2;
+  z-index: 10;
 `;
 
 const Section = styled.div`
@@ -303,3 +308,28 @@ const dropdownStyles = {
     display: 'none',
   }),
 };
+
+const SearchbarLogo = styled.a`
+  display: flex;
+  ${Heading1}
+  position: relative;
+  font-weight: 800;
+  cursor: pointer;
+  float: left;
+  margin-left: 2%;
+  color: ${({ theme }) => theme.white};
+  max-width: fit-content;
+`;
+
+const GwfLogo = styled.img`
+padding: 0px;
+display: flex;
+height: 50px;
+width: 50px;
+cursor: pointer;
+margin-right: 20px;
+
+&:hover {
+  filter: brightness(85%);
+}
+`;

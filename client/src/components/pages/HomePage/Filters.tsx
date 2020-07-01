@@ -96,7 +96,7 @@ export default Filters;
 const FiltersWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100px;
+  width: 355px;
   min-width: 150px;
   margin-right: 48px;
   padding-top: 24px;

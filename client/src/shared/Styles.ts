@@ -60,8 +60,7 @@ export const PageWrapper = styled.div`
   height: 100%;
   width: 100%;
   margin: auto;
-  margin-top: 0px;
-  padding: 24px 48px;
+  #padding: 24px 48px;
 
   @media only screen and (max-width: ${TABLET_BREAKPOINT}px) {
     padding: 24px 16px;
@@ -72,7 +71,7 @@ export const PageContent = styled.div`
   display: flex;
   flex-direction: column;
   max-width: 100%;
-  width: ${CONTENT_WIDTH}px;
+  width: 100%;
   margin: auto;
 `;
 

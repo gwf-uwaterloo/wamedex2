@@ -16,7 +16,7 @@ const App = () => {
     <ThemeProvider theme={Theme}>
       <Router>
         <AppContainer>
-          <Navbar />
+          {/*<Navbar />*/}
           <Switch>
             <Route exact path={HOME_ROUTE}>
               <HomePage />
