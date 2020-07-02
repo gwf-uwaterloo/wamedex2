@@ -37,4 +37,5 @@ export default Loading;
 
 const LoadingWrapper = styled.div`
   margin: 64px auto;
+  margin-left: 33%;
 `;

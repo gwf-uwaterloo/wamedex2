@@ -115,7 +115,6 @@ const HomePage = () => {
 
         let data = await response.json();
         const { query_id, response: searchResults } = data;
-        //alert(searchResults)
         const filters = getSearchFilters(searchResults);
 
         setQueryId(query_id);
@@ -176,9 +175,9 @@ const HomePage = () => {
     <PageWrapper>
       <PageContent>
         <ErrorBoundary FallbackComponent={() => <NoResults>No results found</NoResults>}>
-          {loading && <Loading />}
+          {/*{loading && <Loading />}*/}
           <HomeContent>
-            <MapWrapper><IsoMap polygon={coordinates}></IsoMap></MapWrapper>
+            <MapWrapper><IsoMap polygon={coordinates} updateStatus={searchStatus} articles={filteredResults}></IsoMap></MapWrapper>
             <SideBar>
               {searchStatus ?
                 (<>  <SearchBar
@@ -186,6 +185,7 @@ const HomePage = () => {
                   vertical={selectedVertical}
                   setQuery={setQueryInputText}
                 />
+                {loading && <Loading />}
                 {!query && <HomeText />}
                 {query && searchResults !== null && searchResults.length > 0 && (
                   <Collapsible trigger="Filters" style={{backgroundColor:"blue"}} triggerClassName="FilterClass" triggerOpenedClassName="FilterClass">        
