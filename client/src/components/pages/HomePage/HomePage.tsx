@@ -234,7 +234,7 @@ const SideBar = styled.div`
   height: 100vh;
   overflow: scroll;
   display: inline-block;
-  position: absolute;
+  position: relative;
   flex-direction: column;
   padding-left: 2%;
   resize: horizontal;
@@ -261,7 +261,6 @@ const NoResults = styled.div`
 
 const MapWrapper = styled.div`
   float: right;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
+  display: block;
+  width: 70%;
 `;

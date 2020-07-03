@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Map, TileLayer, Marker, Popup, Polygon} from 'react-leaflet'
 import styled from 'styled-components';
 import { PageWrapper, PageContent, Heading2 } from '../../../shared/Styles';
@@ -10,16 +10,34 @@ interface MapProps {
   articles: SearchArticle[] | null;
 }
 const IsoMap = ({polygon, updateStatus, articles} : MapProps) => {
-  const position = {lat: 46.458305, lng: -81.09848};
+  const position = {lat: 46.458305, lng: -81.09848}
+  const mapRef = useRef(null)
+  const individualPolygon = useRef(null)
+
+  useEffect(() => {
+    if (individualPolygon.current != null && !updateStatus){
+      (mapRef as any).current.leafletElement.fitBounds((individualPolygon as any).current.leafletElement.getBounds(), {padding: [50,50]})
+    }
+    if (updateStatus) {
+      (mapRef as any).current.leafletElement.setView([50,50], 13);
+    }
+  }, [polygon]);
+
+  useEffect(() => {
+    if (updateStatus) {
+      (mapRef as any).current.leafletElement.setView(position, 5);
+    }
+  }, [updateStatus])
+
   return (
-    <Map center={position} zoom={5}>
+    <Map center={position} zoom={5} ref={mapRef}>
       <TileLayer
         url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
       />
       <NoResults>No results found</NoResults>
       {!updateStatus || articles == null ?
-        <>{polygon != "" && <Polygon positions={eval(polygon)} color="blue" />}</>
+        <>{polygon != "" && <Polygon positions={eval(polygon)} color="blue" ref={individualPolygon}/>}</>
         :
         <>{articles != null && 
           articles.map((article, i) => (<Polygon positions={eval(article.coordinates)} color="blue" />))
