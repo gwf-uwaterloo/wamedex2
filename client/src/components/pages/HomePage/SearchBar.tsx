@@ -131,10 +131,10 @@ const SearchBarWrapper = styled.div`
   margin-right: auto;
   display: flex;
   width: 100%;
-  max-width: 100%;
   padding-top: 15px;
   padding-bottom: 15px;
-
+  background-color: #17a2b8;
+  height: 8vh;
 `;
 
 const SearchBarText = styled.div`

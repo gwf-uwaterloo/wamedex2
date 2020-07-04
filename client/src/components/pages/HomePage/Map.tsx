@@ -16,7 +16,7 @@ const IsoMap = ({polygon, updateStatus, articles} : MapProps) => {
 
   useEffect(() => {
     if (individualPolygon.current != null && !updateStatus){
-      (mapRef as any).current.leafletElement.fitBounds((individualPolygon as any).current.leafletElement.getBounds(), {padding: [50,50]})
+      (mapRef as any).current.leafletElement.flyToBounds((individualPolygon as any).current.leafletElement.getBounds(), {padding: [50,50]})
     }
     if (updateStatus) {
       (mapRef as any).current.leafletElement.setView([50,50], 13);
@@ -35,7 +35,6 @@ const IsoMap = ({polygon, updateStatus, articles} : MapProps) => {
         url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
       />
-      <NoResults>No results found</NoResults>
       {!updateStatus || articles == null ?
         <>{polygon != "" && <Polygon positions={eval(polygon)} color="blue" ref={individualPolygon}/>}</>
         :

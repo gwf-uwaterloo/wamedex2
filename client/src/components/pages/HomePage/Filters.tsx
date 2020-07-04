@@ -98,9 +98,8 @@ const FiltersWrapper = styled.div`
   flex-direction: column;
   width: 355px;
   min-width: 150px;
-  margin-right: 48px;
   padding-top: 24px;
-
+  padding-left: 10%;
   @media only screen and (max-width: ${({ theme }) => theme.breakpoints.singleColumn}px) {
     width: 100%;
     padding: 8px 0;

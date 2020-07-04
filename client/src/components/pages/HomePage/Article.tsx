@@ -48,6 +48,7 @@ export default Article;
 
 const HomeTextWrapper = styled.div`
   margin-top: 16px;
+  padding-left: 2%;
 `;
 
 const ArrowLeftIcon = styled(ArrowLeft)`

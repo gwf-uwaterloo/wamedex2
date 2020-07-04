@@ -14,6 +14,7 @@ const Navbar = ({ history }: RouteComponentProps) => {
         <Row>
           <NavbarLogo tabIndex={0} onClick={() => history.push(HOME_ROUTE)}>
             <GwfLogo src={gwf} alt="Github logo" />
+
             Waterloo Metadata Index
           </NavbarLogo>
           <NavbarLinks>

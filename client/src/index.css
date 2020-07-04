@@ -5,9 +5,7 @@ body {
   padding: 0;
   height: 100%;
   width: 100%;
-  font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Roboto','Helvetica','Arial','sans-serif';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-size: 16px;
@@ -40,7 +38,7 @@ button, input, textarea {
   width: 100%;
   height: 100vh;
   margin-right: 0px;
-  z-index: 10;
+  z-index: 1;
   float: right;
   /*bottom: 100px;*/
   /*right: 50px;*/
@@ -50,7 +48,7 @@ button, input, textarea {
   font-family: 'Arial';
   padding-right: 60%;
   margin-top: 20px;
-  margin-left: 33%;
+  margin-left: 40%;
   background-color: #4CAF50; /* Green */
   border: none;
   padding: 5px 32px;

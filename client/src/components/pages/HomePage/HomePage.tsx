@@ -174,7 +174,7 @@ const HomePage = () => {
   return (
     <PageWrapper>
       <PageContent>
-        <ErrorBoundary FallbackComponent={() => <NoResults>No results found</NoResults>}>
+        {/*<ErrorBoundary FallbackComponent={() => <NoResults>No results found</NoResults>}>*/}
           {/*{loading && <Loading />}*/}
           <HomeContent>
             <MapWrapper><IsoMap polygon={coordinates} updateStatus={searchStatus} articles={filteredResults}></IsoMap></MapWrapper>
@@ -185,43 +185,46 @@ const HomePage = () => {
                   vertical={selectedVertical}
                   setQuery={setQueryInputText}
                 />
-                {loading && <Loading />}
-                {!query && <HomeText />}
-                {query && searchResults !== null && searchResults.length > 0 && (
-                  <Collapsible trigger="Filters" style={{backgroundColor:"blue"}} triggerClassName="FilterClass" triggerOpenedClassName="FilterClass">        
-                    <Filters
-                      filters={filters}
-                      selectedFilters={selectedFilters}
-                      setSelectedFilters={setSelectedFilters}
-                    />
-                  </Collapsible>
-                )}
-                {query &&
-                  filteredResults !== null &&
-                  (searchResults === null || filteredResults.length === 0 ? (
-                    <NoResults>No results found</NoResults>
-                  ) : (
-                    <>
-                      {filteredResults.map((article, i) => (
-                        <SearchResult
-                          key={i}
-                          article={article}
-                          position={i}
-                          queryTokens={queryTokens}
-                          queryId={queryId}
-                          updateCoord={updateCoordinates}
-                          updateStatus={updateSearchStatus}
-                          updateCurrentArticle={updateCurrentArticle}
-                        />
-                      ))}
-                    </>
-                  ))} </>) : 
+                <SearchResultWrapper>
+                  {loading && <Loading />}
+                  {!query && <HomeText />}
+                  {query && searchResults !== null && searchResults.length > 0 && (
+                    <Collapsible trigger="Filters" style={{backgroundColor:"blue"}} triggerClassName="FilterClass" triggerOpenedClassName="FilterClass">        
+                      <Filters
+                        filters={filters}
+                        selectedFilters={selectedFilters}
+                        setSelectedFilters={setSelectedFilters}
+                      />
+                    </Collapsible>
+                  )}
+                  {query &&
+                    filteredResults !== null &&
+                    (searchResults === null || filteredResults.length === 0 ? (
+                      <NoResults>No results found</NoResults>
+                    ) : (
+                      <>
+                        
+                          {filteredResults.map((article, i) => (
+                            <SearchResult
+                              key={i}
+                              article={article}
+                              position={i}
+                              queryTokens={queryTokens}
+                              queryId={queryId}
+                              updateCoord={updateCoordinates}
+                              updateStatus={updateSearchStatus}
+                              updateCurrentArticle={updateCurrentArticle}
+                            />
+                          ))}
+                      </>
+                    ))}
+                </SearchResultWrapper></>) : 
                     (
                       <Article updateStatus={updateSearchStatus} article={currentArticle}/>
                   )}
             </SideBar>
           </HomeContent>
-        </ErrorBoundary>
+        {/*</ErrorBoundary>*/}
       </PageContent>
     </PageWrapper>
   );
@@ -230,15 +233,21 @@ const HomePage = () => {
 export default HomePage;
 
 const SideBar = styled.div`
-  width: 30%;
+  width: 40%;
   height: 100vh;
-  overflow: scroll;
   display: inline-block;
-  position: relative;
-  flex-direction: column;
-  padding-left: 2%;
+  position: absolute;
   resize: horizontal;
+  z-index: 10;
+`;
+
+const SearchResultWrapper = styled.div`
+  width: 100%;
+  height: 92vh;
+  overflow: scroll;
   background-color: white;
+  margin-right: 25px;
+  resize: horizontal;
   z-index: 10;
 `;
 
@@ -262,5 +271,6 @@ const NoResults = styled.div`
 const MapWrapper = styled.div`
   float: right;
   display: block;
-  width: 70%;
+  width: 60%;
+  z-index: 1;
 `;

@@ -189,10 +189,10 @@ const SearchResultWrapper = styled.div`
   display: inline-flex;
   flex-direction: column;
   width: 100%;
-  margin: 0 auto;
-  padding: 24px 0;
-  border-bottom: 1px dotted ${({ theme }) => theme.lightGrey};
-  margin-bottom: 8px;
+  padding: 15px 0;
+  padding-left: 3%;
+  border-bottom: 1px solid lightgrey;
+  margin-bottom: 0px;
 `;
 
 const fadeInAnimation = css`animation ${FadeInText} 0.5s ease-in-out;`;
@@ -238,7 +238,6 @@ const Paragraph = styled(ResultText)`
 
 const LinkContainer = styled.div`
   display: flex;
-  margin-top: 8px;
 `;
 
 const TextLink = styled.button`

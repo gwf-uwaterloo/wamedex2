@@ -45,10 +45,9 @@ const BaseArticleResult: React.FC<BaseArticleResultProps> = ({
   return (
     <>
       <Title bold={boldTitle}>
-        {position !== undefined ? `${position + 1}. ` : ''}
+        {/*{position !== undefined ? `${position + 1}. ` : ''}*/}
         {article.url !== null && article.url !== '' ? (
           <Link target="_blank" rel="noopener noreferrer" onClick={onClickTitle}>
-            {/* href={article.url}*/}
             {article.title}
           </Link>
         ) : (
@@ -69,15 +68,14 @@ export default BaseArticleResult;
 
 const Title = styled.div<{ bold?: boolean }>`
   ${Heading3}
-  margin-bottom: 16px;
+  margin-bottom: 5px;
   font-weight: ${({ bold }) => (bold ? 700 : 400)};
-  font-size: 15px;
-  color: #0394fc;
+  font-size: 1rem;
 `;
 
 const Subtitle = styled.div`
   font-size: 14px;
-  margin-bottom: 16px;
+  margin-bottom: 5px;
   color: ${({ theme }) => theme.black};
 `;
 
