@@ -83,9 +83,7 @@ const SearchBar = ({ query, vertical, setQuery, history }: SearchBarProps) => {
 
   return (
     <SearchBarWrapper>
-      <SearchbarLogo tabIndex={0}>
-        <GwfLogo src={gwf} alt="Github logo" />
-      </SearchbarLogo>
+      <GwfLogo src={gwf} alt="Github logo" />
       <Section>
         <SearchInputWrapper>
           <SearchBarInput
@@ -133,8 +131,8 @@ const SearchBarWrapper = styled.div`
   width: 100%;
   padding-top: 15px;
   padding-bottom: 15px;
-  background-color: #17a2b8;
   height: 8vh;
+  min-height: 50px;
 `;
 
 const SearchBarText = styled.div`
@@ -159,7 +157,7 @@ const SearchBarInput = styled.input`
   border-radius: 4px 0 0 4px;
   border: 1px solid ${({ theme }) => theme.grey};
   border-right: none;
-
+  min-height: 40px;
   &:focus {
     border: 1px solid ${({ theme }) => theme.primary};
     border-right: none;
@@ -177,6 +175,7 @@ const SearchButton = styled(Button)`
   outline: none;
   transition: background 0.1s;
   margin-right: 20px;
+  min-height: 40px;
 
   &:hover,
   &:focus {
@@ -312,7 +311,7 @@ height: 50px;
 width: 50px;
 cursor: pointer;
 margin-right: 20px;
-
+margin-left: 20px;
 &:hover {
   filter: brightness(85%);
 }

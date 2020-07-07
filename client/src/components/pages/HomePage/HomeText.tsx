@@ -24,6 +24,7 @@ export default HomeText;
 
 const HomeTextWrapper = styled.div`
   margin-top: 16px;
+  margin-left: 40px;
 `;
 
 const List = styled.ul`

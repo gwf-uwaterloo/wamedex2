@@ -157,6 +157,7 @@ const SearchResult = ({ article, position, queryId, queryTokens, updateCoord, up
           </>
         )}
       </div>
+      {/*
       <LinkContainer>
         {(abstract || paragraphs.length > 0) && (
           <TextLink
@@ -178,7 +179,7 @@ const SearchResult = ({ article, position, queryId, queryTokens, updateCoord, up
             Related articles <LinkIcon size={12} style={{ marginLeft: '4px' }} />
           </RelatedLink>
         )}
-      </LinkContainer>
+        </LinkContainer>*/}
     </SearchResultWrapper>
   );
 };
