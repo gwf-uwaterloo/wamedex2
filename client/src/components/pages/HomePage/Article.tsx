@@ -47,8 +47,9 @@ const Article = ({updateStatus, article}: ArticleProps) => {
 export default Article;
 
 const HomeTextWrapper = styled.div`
-  margin-top: 16px;
-  padding-left: 2%;
+  padding: 16px 3% 0px 3%;
+  background-color: white;
+  height: 100%;
 `;
 
 const ArrowLeftIcon = styled(ArrowLeft)`
@@ -67,7 +68,6 @@ const Title = styled.p<{ bold?: boolean }>`
 const Subtitle = styled.div`
   display: block;
   font-size: 16px;
-  margin-bottom: 0px;
   color: ${({ theme }) => theme.black};
 `;
 

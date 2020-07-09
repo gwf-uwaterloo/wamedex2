@@ -95,7 +95,6 @@ const OptionWrapper = styled.button`
   cursor: pointer;
   border: none;
   padding: 0;
-  background: ${({ theme }) => theme.white};
 
   &:hover {
     & > .checkbox {

@@ -54,12 +54,13 @@ const BaseArticleResult: React.FC<BaseArticleResultProps> = ({
           article.title
         )}
       </Title>
+      {/*
       <Subtitle>
         {authorString && <Authors>{authorString}</Authors>}
         {article.journal && <Journal>{article.journal}</Journal>}
         {source && <Journal>{source}</Journal>}
         {article.publish_time && <PublishTime>({article.publish_time})</PublishTime>}
-      </Subtitle>
+      </Subtitle>*/}
     </>
   );
 };
@@ -70,7 +71,9 @@ const Title = styled.div<{ bold?: boolean }>`
   ${Heading3}
   margin-bottom: 5px;
   font-weight: ${({ bold }) => (bold ? 700 : 400)};
-  font-size: 1rem;
+  font-size: 1.05rem;
+  font-weight: 400;
+  line-height: 1.2;
 `;
 
 const Subtitle = styled.div`

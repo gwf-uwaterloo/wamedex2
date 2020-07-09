@@ -189,11 +189,11 @@ export default SearchResult;
 const SearchResultWrapper = styled.div`
   display: inline-flex;
   flex-direction: column;
-  width: 100%;
-  padding: 15px 0;
-  padding-left: 3%;
-  border-bottom: 1px solid lightgrey;
-  margin-bottom: 0px;
+  width: 96%;
+  padding: 2.3% 2% 2.1% 2%;
+  border: 1px solid rgba(0,0,0,.12);
+  margin: 0% 2% 0% 2%;
+  background-color: white;
 `;
 
 const fadeInAnimation = css`animation ${FadeInText} 0.5s ease-in-out;`;

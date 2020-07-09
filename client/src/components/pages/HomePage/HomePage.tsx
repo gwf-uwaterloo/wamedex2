@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useLocation } from 'react-router';
 import ErrorBoundary from 'react-error-boundary';
+import { Resizable } from 're-resizable';
+import { ArrowLeft } from 'react-feather';
 
 import { PageWrapper, PageContent, Heading2 } from '../../../shared/Styles';
 import Loading from '../../common/Loading';
@@ -71,6 +73,29 @@ const getSearchFilters = (searchResults: SearchArticle[] | null): SearchFilters 
     sources: Array.from(sources.values()),
   };
 };
+
+function getWindowDimensions() {
+  const { innerWidth: windowWidth, innerHeight: windowHeight } = window;
+  return {
+    windowWidth,
+    windowHeight
+  };
+}
+
+function useWindowDimensions() {
+  const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowDimensions(getWindowDimensions());
+    }
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return windowDimensions;
+}
 
 const HomePage = () => {
   const urlParams = new URLSearchParams(useLocation().search);
@@ -170,6 +195,17 @@ const HomePage = () => {
   function updateCurrentArticle(article: SearchArticle) {
     setCurrentArticle(article);
   }
+  const { windowHeight, windowWidth } = useWindowDimensions();
+  const [width, setWidth] = React.useState(0.4*windowWidth);
+  const [height, setHeight] = React.useState(0.99*windowHeight);
+
+  const style = {
+    display: "inline-block",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#fafafa",
+    borderRight: "3px solid grey"
+  } as React.CSSProperties;
 
   return (
     <PageWrapper>
@@ -177,7 +213,16 @@ const HomePage = () => {
         {/*<ErrorBoundary FallbackComponent={() => <NoResults>No results found</NoResults>}>*/}
           {/*{loading && <Loading />}*/}
           <HomeContent>
-            <MapWrapper><IsoMap polygon={coordinates} updateStatus={searchStatus} articles={filteredResults}></IsoMap></MapWrapper>
+          <IsoMap polygon={coordinates} updateStatus={searchStatus} articles={filteredResults} mapWidth={windowWidth-width}></IsoMap>
+          <Resizable
+            style={style}
+            size={{ width, height }}
+            onResizeStop={(e, direction, ref, d) => {
+              setWidth(width + d.width);
+              setHeight(height + d.height);
+            }}
+            
+          >
             <SideBar>
               {searchStatus ?
                 (<>  <SearchBar
@@ -222,6 +267,7 @@ const HomePage = () => {
                       <Article updateStatus={updateSearchStatus} article={currentArticle}/>
                   )}
             </SideBar>
+            </Resizable>
           </HomeContent>
         {/*</ErrorBoundary>*/}
       </PageContent>
@@ -232,14 +278,10 @@ const HomePage = () => {
 export default HomePage;
 
 const SideBar = styled.div`
-  width: 30%;
-  height: 100vh;
-  display: inline-block;
-  position: absolute;
-  resize: horizontal;
-  z-index: 10;
-  background-color: white;
-  overflow: scroll;
+  width: 100%;
+  height: 99.8vh;
+  background-color: #f0f0f0;
+  overflow-y: scroll;
 `;
 
 const HomeContent = styled.div`
@@ -257,11 +299,4 @@ const NoResults = styled.div`
   display: flex;
   margin-top: 16px;
   padding-bottom: 24px;
-`;
-
-const MapWrapper = styled.div`
-  float: right;
-  display: block;
-  width: 80%;
-  z-index: 1;
 `;

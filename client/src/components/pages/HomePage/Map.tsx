@@ -8,15 +8,16 @@ interface MapProps {
   polygon: string;
   updateStatus: boolean;
   articles: SearchArticle[] | null;
+  mapWidth: number;
 }
-const IsoMap = ({polygon, updateStatus, articles} : MapProps) => {
+const IsoMap = ({polygon, updateStatus, articles, mapWidth} : MapProps) => {
   const position = {lat: 46.458305, lng: -81.09848}
   const mapRef = useRef(null)
   const individualPolygon = useRef(null)
 
   useEffect(() => {
     if (individualPolygon.current != null && !updateStatus){
-      (mapRef as any).current.leafletElement.flyToBounds((individualPolygon as any).current.leafletElement.getBounds(), {padding: [50,50]})
+      (mapRef as any).current.leafletElement.flyToBounds((individualPolygon as any).current.leafletElement.getBounds(), {animate: true, duration: 0.5})
     }
     if (updateStatus) {
       (mapRef as any).current.leafletElement.setView([50,50], 13);
@@ -30,7 +31,7 @@ const IsoMap = ({polygon, updateStatus, articles} : MapProps) => {
   }, [updateStatus])
 
   return (
-    <Map center={position} zoom={5} ref={mapRef}>
+    <Map center={position} zoom={5} ref={mapRef} style={{width: mapWidth}}>
       <TileLayer
         url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'

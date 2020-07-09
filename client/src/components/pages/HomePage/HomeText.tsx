@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Body, Link } from '../../../shared/Styles';
 import GithubImg from '../../../img/github.png';
+import WaterlooImg from '../../../img/uwaterloo.png';
 
 const HomeText = () => {
   return (
@@ -16,6 +17,8 @@ const HomeText = () => {
       >
         <GithubLogo src={GithubImg} alt="Github logo" />
       </Link>
+      <WaterlooLogo src={WaterlooImg} alt="Logo of the University of Waterloo"/>
+
     </HomeTextWrapper>
   );
 };
@@ -51,6 +54,19 @@ const GithubLogo = styled.img`
   width: 50px;
   cursor: pointer;
   margin-left: 40%;
+  &:hover {
+    filter: brightness(85%);
+  }
+  color: black;
+`;
+
+const WaterlooLogo = styled.img`
+  display: flex;
+  height: 50px;
+  width: 200px;
+  cursor: pointer;
+  margin-left: 30%;
+  margin-top: 2%;
   &:hover {
     filter: brightness(85%);
   }
