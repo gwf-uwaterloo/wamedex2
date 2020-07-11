@@ -20,15 +20,10 @@ const IsoMap = ({polygon, updateStatus, articles, mapWidth} : MapProps) => {
       (mapRef as any).current.leafletElement.flyToBounds((individualPolygon as any).current.leafletElement.getBounds(), {animate: true, duration: 0.5})
     }
     if (updateStatus) {
-      (mapRef as any).current.leafletElement.setView([50,50], 13);
-    }
-  }, [polygon]);
-
-  useEffect(() => {
-    if (updateStatus) {
       (mapRef as any).current.leafletElement.setView(position, 5);
     }
-  }, [updateStatus])
+  }, [polygon, updateStatus]);
+
 
   return (
     <Map center={position} zoom={5} ref={mapRef} style={{width: mapWidth}}>

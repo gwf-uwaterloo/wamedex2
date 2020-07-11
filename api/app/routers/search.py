@@ -82,7 +82,6 @@ async def post_clicked(data: SearchLogData):
 def build_article(hit, id: str, score: float, paragraphs: List[str],
                   highlighted_abstract: bool, vertical: SearchVertical):
     doc = hit.lucene_document
-    #print(doc.get("coordinates"))
     return SearchArticle(id=id,
                          abstract=doc.get('abstract'),
                          authors=get_author_field(doc, 'responsible_party'),
@@ -95,4 +94,11 @@ def build_article(hit, id: str, score: float, paragraphs: List[str],
                          paragraphs=["paragraph 1", "paragraph 2"],
                          highlighted_abstract = False,
                          has_related_articles=vertical == SearchVertical.cord19,
-                         coordinates = doc.get("coordinates"))
+                         coordinates = doc.get("coordinates"),
+                         purpose = doc.get("purpose"),
+                         suppl_info = doc.get("supplinfo"),
+                         topic_category = doc.get("topic_category"),
+                         keywords=get_author_field(doc, "keywords"),
+                         recommended_ctiation = doc.get("recommended_citation"),
+                         theasurus_name = doc.get("theasurus_name")
+                         )

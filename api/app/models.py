@@ -15,6 +15,12 @@ class BaseArticle(BaseModel):
     source: List[str] = []
     url: str
     coordinates: str
+    purpose: str
+    suppl_info: str
+    topic_category: str
+    keywords: List[str] = []
+    recommended_ctiation: str
+    theasurus_name: str
 
 
 class SearchArticle(BaseArticle):

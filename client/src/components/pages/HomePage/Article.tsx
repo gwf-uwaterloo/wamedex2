@@ -20,6 +20,9 @@ const Article = ({updateStatus, article}: ArticleProps) => {
     });
   }
 
+  let keywordString = '';
+  article.keywords.forEach((keyword) => {keywordString += keyword + ", "});
+
   // Indicate if arXiv, medRxiv, or bioRxiv is the source
   let source = article.source.join(",");
   return (
@@ -31,25 +34,111 @@ const Article = ({updateStatus, article}: ArticleProps) => {
         </Link>
       </Title>
       <Subtitle>
+        <Subheading>Responsible Parties</Subheading>
         {authorString && <Authors>{authorString}</Authors>}
+        <Subheading>Journal</Subheading>
         {article.journal && <Journal>{article.journal}</Journal>}
+        <Subheading>Contact Organization</Subheading>
         {source && <Journal>{source}</Journal>}
+        <Subheading>Publish Date</Subheading>
         {article.publish_time && <PublishTime>({article.publish_time})</PublishTime>}
       </Subtitle>
-      <Title>Abstract</Title>
-      <Abstract>
+      <Subheading>Recommended Citations</Subheading>
+      <Content>
+        {article.recommended_ctiation}
+      </Content>
+      <Subheading>Purpose</Subheading>
+      <Content>
+        {article.purpose}
+      </Content>
+      <Subheading>Abstract</Subheading>
+      <Content>
         {article.abstract}
-      </Abstract>
+      </Content>
+      <Subheading>Supplemental Information</Subheading>
+      <Content>
+        {article.suppl_info}
+      </Content>
+      <Subheading>Topic Category</Subheading>
+      <Content>
+        {article.topic_category}
+      </Content>
+      <Subheading>Theasurus Name</Subheading>
+      <Content>
+        {article.theasurus_name}
+      </Content>
+      <Subheading>Keywords</Subheading>
+      <Content>
+        {keywordString.slice(0,-2)}
+      </Content>
+      <Heading>Contact Information</Heading>
+      <Subheading>Contact Person</Subheading>
+      <Content>
+        UW GWF Data Manager
+      </Content>
+      <Subheading>Contact Organisation</Subheading>
+      <Content>
+        Global Water Futures, University of Waterloo
+      </Content>
+      <Subheading>Address</Subheading>
+      <Content>
+        200 University Ave W, Waterloo, ON N2L 3G1, Canada
+      </Content>
+      <Subheading>E-Mail</Subheading>
+      <Content>
+        <Link
+                href="mailto:gwf-uw@uwaterloo.ca"
+                target="_blank"
+                rel="noopener noreferrer"
+        >
+          gwf-uw@uwaterloo.ca
+        </Link>
+      </Content>
+      <Subheading>Phone</Subheading>
+      <Content>
+        519-888-4567, ext. 31327
+      </Content>
+      <Subheading>Website</Subheading>
+      <Content>
+        <Link
+                href="https://uwaterloo.ca/global-water-futures/"
+                target="_blank"
+                rel="noopener noreferrer"
+        >
+          https://uwaterloo.ca/global-water-futures/
+        </Link>
+      </Content>
+      <Subheading>Date Stamp</Subheading>
+      <Content>
+        2019-03-05
+      </Content>
+
     </HomeTextWrapper>
   );
 };
 
 export default Article;
 
+const Heading = styled.div`
+  font-size: 22px;
+  margin-top: 20px;
+  display: block;
+  color: black;
+`
+
+const Subheading = styled.div`
+  display: block;
+  font-size: 16px;
+  font-weight: bolder;
+  margin-top: 15px;
+  color: ${({ theme }) => theme.black};
+`
+
 const HomeTextWrapper = styled.div`
   padding: 16px 3% 0px 3%;
   background-color: white;
   height: 100%;
+  overflow: scroll;
 `;
 
 const ArrowLeftIcon = styled(ArrowLeft)`
@@ -87,6 +176,6 @@ const PublishTime = styled.div`
   display: block;
 `;
 
-const Abstract = styled.div`
+const Content = styled.div`
   padding-right: 2%
 `

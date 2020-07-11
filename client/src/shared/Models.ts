@@ -8,6 +8,12 @@ export interface BaseArticle {
   title: string;
   url: string;
   coordinates: string;
+  purpose: string;
+  suppl_info: string;
+  topic_category: string;
+  keywords: Array<string>;
+  recommended_ctiation: string;
+  theasurus_name: string;
 }
 
 
