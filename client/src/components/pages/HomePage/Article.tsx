@@ -110,7 +110,7 @@ const Article = ({updateStatus, article}: ArticleProps) => {
       </Content>
       <Subheading>Date Stamp</Subheading>
       <Content>
-        2019-03-05
+        {article.publish_time}
       </Content>
 
     </HomeTextWrapper>
