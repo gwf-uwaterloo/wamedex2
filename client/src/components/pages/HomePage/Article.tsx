@@ -27,7 +27,11 @@ const Article = ({updateStatus, article}: ArticleProps) => {
   let source = article.source.join(",");
   return (
     <HomeTextWrapper>
-      <ArrowLeftIcon onClick={() => updateStatus(true)}/>
+      <ReturnBar>
+        <ArrowLeftIcon onClick={() => updateStatus(true)}/> 
+        <ReturnText> Back to Search Results</ReturnText>
+      </ReturnBar>
+
       <Title>
         <Link href={article.url} target="_blank" rel="noopener noreferrer">
           {article.title}
@@ -141,11 +145,22 @@ const HomeTextWrapper = styled.div`
   overflow: scroll;
 `;
 
+const ReturnBar = styled.div`
+  display: block;
+`
+
 const ArrowLeftIcon = styled(ArrowLeft)`
-  display: inline;
+  display: inline-block;
+  vertical-align: middle;
   height: 25px;
   width: 25px;
 `;
+
+const ReturnText = styled.div`
+  display: inline-block;
+  margin-left: 1%;
+  padding: 5px 5px 5px 5px;
+`
 
 const Title = styled.p<{ bold?: boolean }>`
   ${Heading3}
