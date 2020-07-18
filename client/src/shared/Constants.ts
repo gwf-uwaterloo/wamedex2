@@ -15,7 +15,7 @@ export const CONTENT_WIDTH = 1500;
 /* API */
 /* Change server name for deployment */
 export const API_BASE =
-  process.env.NODE_ENV === 'development' ? 'http://167.99.179.16:8000/api' : '/api';
+  process.env.NODE_ENV === 'development' ? 'http://wamdex.cs.uwaterloo.ca:80/api' : '/api';
   //process.env.NODE_ENV === 'development' ? 'http://localhost:8000/api' : '/api';
 export const SEARCH_ENDPOINT = '/search';
 export const SEARCH_COLLAPSED_ENDPOINT = '/search/log/collapsed';
